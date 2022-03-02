@@ -6,13 +6,16 @@ const path = require('path');
 module.exports = {
   target: 'web',
   // 入口
-  entry: './src/index.js',
+  entry: './src/index.ts',
   // 模式 development
   mode: 'development',
   // 出口
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.[hash].js',
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   // loader
   module: {
@@ -37,12 +40,10 @@ module.exports = {
         type: 'asset/resource'
       },
       {
-        test: /\.m?js$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        }
-      }
+      },
     ],
   },
   // 插件
@@ -56,5 +57,5 @@ module.exports = {
     new CompressionPlugin()
   ],
 
-  devtool: 'source-map'
+  devtool: 'inline-source-map'
 }
